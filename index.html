@@ -1,0 +1,1563 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LEVELUP BAZAAR — Pakistan's Digital Game Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              base: {
+                900: "#0B0B0D",
+                850: "#111114",
+                800: "#17171B",
+                700: "#1F1F24",
+                600: "#2A2A31",
+                500: "#3A3A42",
+              },
+              red: {
+                DEFAULT: "#E4231C",
+                deep: "#A3140F",
+                bright: "#FF453E",
+                soft: "#3A1414",
+              },
+            },
+            fontFamily: {
+              display: ["Rajdhani", "sans-serif"],
+              body: ["Inter", "sans-serif"],
+              mono: ['"JetBrains Mono"', "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background: #0b0b0d;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      .font-display {
+        font-family: "Rajdhani", sans-serif;
+      }
+      .font-mono {
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      ::-webkit-scrollbar {
+        height: 8px;
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0b0b0d;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #3a3a42;
+        border-radius: 99px;
+      }
+
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .dropdown-panel {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(6px);
+        transition: all 0.16s ease;
+      }
+      .dropdown:hover .dropdown-panel,
+      .dropdown:focus-within .dropdown-panel {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .card-cover {
+        position: relative;
+        overflow: hidden;
+      }
+      .card-cover::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          transparent 40%,
+          rgba(0, 0, 0, 0.75) 100%
+        );
+      }
+
+      .hero-glow {
+        background:
+          radial-gradient(
+            60% 90% at 85% 20%,
+            rgba(228, 35, 28, 0.3),
+            transparent 60%
+          ),
+          radial-gradient(
+            50% 70% at 10% 100%,
+            rgba(228, 35, 28, 0.14),
+            transparent 60%
+          ),
+          #111114;
+      }
+
+      .ticker-track {
+        display: flex;
+        gap: 44px;
+        white-space: nowrap;
+        width: max-content;
+        animation: scrollTicker 30s linear infinite;
+      }
+      @keyframes scrollTicker {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .ticker-track {
+          animation: none;
+          overflow-x: auto;
+        }
+      }
+
+      .glow-border:hover {
+        box-shadow:
+          0 0 0 1px rgba(228, 35, 28, 0.6),
+          0 12px 30px rgba(228, 35, 28, 0.18);
+      }
+    </style>
+  </head>
+  <body class="bg-base-900 text-white antialiased">
+    <!-- UTILITY BAR -->
+    <div
+      class="bg-base-850 border-b border-white/5 text-white/60 font-mono text-[0.7rem]"
+    >
+      <div
+        class="max-w-[1320px] mx-auto px-6 py-2 flex items-center justify-between gap-4 flex-wrap"
+      >
+        <div class="flex gap-5 flex-wrap">
+          <span>COD across Pakistan</span>
+          <span class="hidden sm:inline">Helpline: 0311-1234567</span>
+          <span class="hidden md:inline"
+            >Same-day delivery — KHI · LHR · ISB</span
+          >
+        </div>
+        <div
+          class="flex bg-white/5 rounded-full p-1 gap-0.5"
+          role="group"
+          aria-label="Login as"
+        >
+          <button
+            type="button"
+            class="role-btn active px-3 py-1 rounded-full font-semibold bg-red text-white"
+          >
+            Customer
+          </button>
+          <button
+            type="button"
+            class="role-btn px-3 py-1 rounded-full font-semibold text-white/50"
+          >
+            Vendor
+          </button>
+          <button
+            type="button"
+            class="role-btn px-3 py-1 rounded-full font-semibold text-white/50"
+          >
+            Admin
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- =============================================================
+     SECTION 1 — NAVBAR
+============================================================== -->
+    <header
+      class="sticky top-0 z-[100] bg-base-900/90 backdrop-blur border-b border-white/10"
+    >
+      <div class="max-w-[1320px] mx-auto px-6 py-3.5 flex items-center gap-7">
+        <a href="#top" class="flex items-center gap-2.5 shrink-0">
+          <span
+            class="w-9 h-9 bg-red rounded-lg flex items-center justify-center"
+          >
+            <svg
+              width="19"
+              height="19"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#fff"
+              stroke-width="2"
+            >
+              <rect x="3" y="8" width="18" height="9" rx="4" />
+              <circle cx="8" cy="12.5" r="1.4" fill="#fff" />
+              <circle cx="16" cy="11" r="1" fill="#fff" />
+              <circle cx="18" cy="13" r="1" fill="#fff" />
+            </svg>
+          </span>
+          <span
+            class="font-display font-bold text-xl tracking-wide leading-none"
+            >LEVEL<span class="text-red">UP</span></span
+          >
+        </a>
+
+        <nav
+          class="hidden lg:flex items-center gap-6 text-sm font-semibold text-white/80"
+        >
+          <div class="dropdown relative">
+            <button class="flex items-center gap-1.5 py-2 hover:text-white">
+              Store ▾
+            </button>
+            <div
+              class="dropdown-panel absolute top-full mt-3 left-0 bg-base-800 border border-white/10 rounded-xl w-64 p-2 grid grid-cols-2 gap-1 shadow-2xl"
+            >
+              <a
+                href="#categories"
+                class="px-3 py-2 rounded-lg text-sm hover:bg-white/5 hover:text-red"
+                >PlayStation</a
+              >
+              <a
+                href="#categories"
+                class="px-3 py-2 rounded-lg text-sm hover:bg-white/5 hover:text-red"
+                >Xbox</a
+              >
+              <a
+                href="#categories"
+                class="px-3 py-2 rounded-lg text-sm hover:bg-white/5 hover:text-red"
+                >PC Gaming</a
+              >
+              <a
+                href="#categories"
+                class="px-3 py-2 rounded-lg text-sm hover:bg-white/5 hover:text-red"
+                >Switch</a
+              >
+              <a
+                href="#categories"
+                class="px-3 py-2 rounded-lg text-sm hover:bg-white/5 hover:text-red"
+                >Accessories</a
+              >
+              <a
+                href="#categories"
+                class="px-3 py-2 rounded-lg text-sm hover:bg-white/5 hover:text-red"
+                >Pre-Owned</a
+              >
+            </div>
+          </div>
+          <a href="#deals" class="hover:text-white">Deals</a>
+          <a href="#services" class="hover:text-white">Services</a>
+          <a href="#about" class="hover:text-white">About</a>
+          <a href="#contact" class="hover:text-white">Support</a>
+        </nav>
+
+        <div
+          class="flex-1 max-w-[420px] hidden md:flex items-stretch bg-base-800 border border-white/10 rounded-lg overflow-hidden focus-within:border-red/60"
+        >
+          <label for="filter-select" class="sr-only">Filter category</label>
+          <select
+            id="filter-select"
+            aria-label="Filter by category"
+            class="bg-base-700 text-white/70 border-r border-white/10 px-3 font-mono text-[0.7rem] font-semibold max-w-[110px] focus:outline-none"
+          >
+            <option>All</option>
+            <option>PlayStation</option>
+            <option>Xbox</option>
+            <option>PC Parts</option>
+            <option>Switch</option>
+            <option>Accessories</option>
+          </select>
+          <input
+            type="text"
+            placeholder="Search the store…"
+            aria-label="Search products"
+            class="flex-1 min-w-[60px] bg-transparent px-3 text-sm placeholder-white/30 focus:outline-none"
+          />
+          <button
+            type="button"
+            aria-label="Search"
+            class="px-3.5 flex items-center justify-center text-white/60 hover:text-red"
+          >
+            <svg
+              width="17"
+              height="17"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.4"
+            >
+              <circle cx="11" cy="11" r="7" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="flex items-center gap-3 shrink-0 ml-auto">
+          <button
+            aria-label="Wishlist"
+            class="hidden sm:flex w-9 h-9 rounded-full items-center justify-center text-white/70 hover:text-red hover:bg-white/5"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                d="M12 21s-7-4.35-9.5-8.5C.7 8.9 2.4 5 6 5c2 0 3.3 1 4 2.2C10.7 6 12 5 14 5c3.6 0 5.3 3.9 3.5 7.5C19 16.65 12 21 12 21z"
+              />
+            </svg>
+          </button>
+          <button
+            aria-label="Cart"
+            class="relative w-9 h-9 rounded-full flex items-center justify-center text-white/70 hover:text-red hover:bg-white/5"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="9" cy="21" r="1" />
+              <circle cx="19" cy="21" r="1" />
+              <path
+                d="M2 3h2l2.4 12.2a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L21 7H6"
+              />
+            </svg>
+            <span
+              class="absolute -top-1 -right-1 w-[16px] h-[16px] rounded-full bg-red text-white font-mono text-[0.58rem] font-bold flex items-center justify-center"
+              >3</span
+            >
+          </button>
+          <a
+            href="#top"
+            class="hidden sm:inline-flex items-center px-4 py-2 rounded-lg font-semibold text-sm text-white/80 hover:text-white"
+            >Sign In</a
+          >
+          <a
+            href="#top"
+            class="inline-flex items-center px-4 py-2 rounded-lg font-bold text-sm bg-red hover:bg-red-bright transition text-white"
+            >Sign Up</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- =============================================================
+     SECTION 2 — MAIN / HERO (storefront banner + new releases rail)
+============================================================== -->
+      <section class="hero-glow border-b border-white/10">
+        <div
+          class="max-w-[1320px] mx-auto px-6 pt-14 pb-10 grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center"
+        >
+          <div class="max-w-[560px]">
+            <div
+              class="inline-flex items-center gap-2 bg-red/15 text-red-bright border border-red/30 rounded-full px-3 py-1 font-mono text-[0.7rem] font-bold uppercase tracking-wider mb-5"
+            >
+              <span
+                class="w-1.5 h-1.5 rounded-full bg-red-bright animate-pulse"
+              ></span>
+              Featured Drop
+            </div>
+            <h1
+              class="font-display font-bold leading-[1.02] text-[clamp(2.4rem,5vw,4rem)] uppercase"
+            >
+              PS5 Pro Bundle<br /><span class="text-red">Now In Stock.</span>
+            </h1>
+            <p class="text-white/60 mt-4 max-w-[460px] text-[1.02rem]">
+              1TB SSD, DualSense Edge, and two exclusive titles — verified
+              genuine, delivered nationwide with cash on delivery.
+            </p>
+
+            <div class="flex items-center gap-4 mt-7 flex-wrap">
+              <div class="flex items-baseline gap-2">
+                <span class="font-mono text-white/40 line-through text-sm"
+                  >PKR 259,999</span
+                >
+                <span class="font-display font-bold text-3xl">PKR 219,999</span>
+              </div>
+              <span
+                class="bg-red text-white text-xs font-bold font-mono px-2.5 py-1 rounded"
+                >−15%</span
+              >
+            </div>
+
+            <div class="flex gap-3.5 flex-wrap mt-7">
+              <a
+                href="#categories"
+                class="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-bold text-sm bg-red hover:bg-red-bright transition"
+                >Add to Cart</a
+              >
+              <a
+                href="#categories"
+                class="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-bold text-sm border border-white/20 hover:border-white/50 transition"
+                >View Store</a
+              >
+            </div>
+
+            <div class="flex gap-2 mt-9">
+              <span class="w-6 h-1.5 rounded-full bg-red"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-white/25"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-white/25"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-white/25"></span>
+            </div>
+          </div>
+
+          <div class="relative">
+            <div
+              class="relative bg-gradient-to-br from-base-700 via-base-800 to-black border border-white/10 rounded-2xl aspect-[4/3] flex items-center justify-center overflow-hidden"
+            >
+              <div
+                class="absolute inset-0 opacity-20"
+                style="
+                  background-image: radial-gradient(
+                    circle,
+                    #ffffff10 1px,
+                    transparent 1px
+                  );
+                  background-size: 22px 22px;
+                "
+              ></div>
+              <svg
+                class="w-[62%] max-w-[300px] relative"
+                viewBox="0 0 200 120"
+                fill="none"
+              >
+                <path
+                  d="M40 40 Q20 40 15 65 Q10 95 30 105 Q45 112 55 95 L75 75 H125 L145 95 Q155 112 170 105 Q190 95 185 65 Q180 40 160 40 Q150 30 130 32 H70 Q50 30 40 40Z"
+                  fill="#E4231C"
+                  stroke="#0B0B0D"
+                  stroke-width="3"
+                />
+                <circle cx="55" cy="62" r="4.5" fill="#0B0B0D" />
+                <circle cx="55" cy="80" r="4.5" fill="#0B0B0D" />
+                <circle cx="46" cy="71" r="4.5" fill="#0B0B0D" />
+                <circle cx="64" cy="71" r="4.5" fill="#0B0B0D" />
+                <circle
+                  cx="150"
+                  cy="62"
+                  r="5"
+                  stroke="#0B0B0D"
+                  stroke-width="2.5"
+                />
+                <circle
+                  cx="132"
+                  cy="80"
+                  r="5"
+                  stroke="#0B0B0D"
+                  stroke-width="2.5"
+                />
+                <circle
+                  cx="141"
+                  cy="71"
+                  r="5"
+                  stroke="#0B0B0D"
+                  stroke-width="2.5"
+                />
+                <circle
+                  cx="159"
+                  cy="71"
+                  r="5"
+                  stroke="#0B0B0D"
+                  stroke-width="2.5"
+                />
+                <rect
+                  x="90"
+                  y="45"
+                  width="20"
+                  height="8"
+                  rx="3"
+                  fill="#0B0B0D"
+                />
+              </svg>
+            </div>
+            <span
+              class="absolute -top-4 -left-4 bg-base-800 border border-white/10 rounded-xl px-3.5 py-2 font-mono text-xs font-bold shadow-xl"
+              >⭐ 4.9 / 5</span
+            >
+            <span
+              class="absolute -bottom-4 -right-4 bg-red rounded-xl px-3.5 py-2 font-mono text-xs font-bold shadow-xl"
+              >Free Delivery</span
+            >
+          </div>
+        </div>
+
+        <!-- restock ticker -->
+        <div class="bg-base-850 border-y border-white/10 overflow-hidden py-2">
+          <div class="ticker-track">
+            <span
+              class="font-mono text-xs font-semibold text-white/70 inline-flex items-center gap-2.5"
+              ><i class="w-1.5 h-1.5 rounded-full bg-red inline-block"></i>
+              RESTOCKED — <b class="text-white">PS5 Pro</b> · PKR 219,999</span
+            >
+            <span
+              class="font-mono text-xs font-semibold text-white/70 inline-flex items-center gap-2.5"
+              ><i class="w-1.5 h-1.5 rounded-full bg-red inline-block"></i> NEW
+              ARRIVAL — <b class="text-white">RTX 4070 Ti</b> · PKR
+              189,999</span
+            >
+            <span
+              class="font-mono text-xs font-semibold text-white/70 inline-flex items-center gap-2.5"
+              ><i class="w-1.5 h-1.5 rounded-full bg-red inline-block"></i> LOW
+              STOCK — <b class="text-white">Switch OLED</b> · 6 units left</span
+            >
+            <span
+              class="font-mono text-xs font-semibold text-white/70 inline-flex items-center gap-2.5"
+              ><i class="w-1.5 h-1.5 rounded-full bg-red inline-block"></i> DEAL
+              — <b class="text-white">DualSense Edge</b> · 15% off today</span
+            >
+            <span
+              class="font-mono text-xs font-semibold text-white/70 inline-flex items-center gap-2.5"
+              ><i class="w-1.5 h-1.5 rounded-full bg-red inline-block"></i>
+              RESTOCKED — <b class="text-white">PS5 Pro</b> · PKR 219,999</span
+            >
+            <span
+              class="font-mono text-xs font-semibold text-white/70 inline-flex items-center gap-2.5"
+              ><i class="w-1.5 h-1.5 rounded-full bg-red inline-block"></i> NEW
+              ARRIVAL — <b class="text-white">RTX 4070 Ti</b> · PKR
+              189,999</span
+            >
+            <span
+              class="font-mono text-xs font-semibold text-white/70 inline-flex items-center gap-2.5"
+              ><i class="w-1.5 h-1.5 rounded-full bg-red inline-block"></i> LOW
+              STOCK — <b class="text-white">Switch OLED</b> · 6 units left</span
+            >
+            <span
+              class="font-mono text-xs font-semibold text-white/70 inline-flex items-center gap-2.5"
+              ><i class="w-1.5 h-1.5 rounded-full bg-red inline-block"></i> DEAL
+              — <b class="text-white">DualSense Edge</b> · 15% off today</span
+            >
+          </div>
+        </div>
+
+        <!-- category chip filter -->
+        <div
+          class="max-w-[1320px] mx-auto px-6 py-5 flex gap-2.5 overflow-x-auto no-scrollbar"
+        >
+          <button
+            class="shrink-0 px-4 py-2 rounded-full text-sm font-semibold bg-red text-white"
+          >
+            All
+          </button>
+          <button
+            class="shrink-0 px-4 py-2 rounded-full text-sm font-semibold bg-base-800 border border-white/10 text-white/70 hover:border-red/50 hover:text-white"
+          >
+            PlayStation
+          </button>
+          <button
+            class="shrink-0 px-4 py-2 rounded-full text-sm font-semibold bg-base-800 border border-white/10 text-white/70 hover:border-red/50 hover:text-white"
+          >
+            Xbox
+          </button>
+          <button
+            class="shrink-0 px-4 py-2 rounded-full text-sm font-semibold bg-base-800 border border-white/10 text-white/70 hover:border-red/50 hover:text-white"
+          >
+            PC Gaming
+          </button>
+          <button
+            class="shrink-0 px-4 py-2 rounded-full text-sm font-semibold bg-base-800 border border-white/10 text-white/70 hover:border-red/50 hover:text-white"
+          >
+            Switch
+          </button>
+          <button
+            class="shrink-0 px-4 py-2 rounded-full text-sm font-semibold bg-base-800 border border-white/10 text-white/70 hover:border-red/50 hover:text-white"
+          >
+            Accessories
+          </button>
+          <button
+            class="shrink-0 px-4 py-2 rounded-full text-sm font-semibold bg-base-800 border border-white/10 text-white/70 hover:border-red/50 hover:text-white"
+          >
+            Pre-Owned
+          </button>
+        </div>
+
+        <!-- new releases rail -->
+        <div class="max-w-[1320px] mx-auto px-6 pb-14" id="deals">
+          <div class="flex items-end justify-between mb-5">
+            <h2 class="font-display font-bold text-2xl uppercase">
+              🔥 New This Week
+            </h2>
+            <a
+              href="#categories"
+              class="text-red text-sm font-semibold hover:text-red-bright"
+              >View All →</a
+            >
+          </div>
+          <div class="flex gap-4 overflow-x-auto no-scrollbar pb-2">
+            <div
+              class="glow-border shrink-0 w-56 bg-base-800 border border-white/10 rounded-xl overflow-hidden transition"
+            >
+              <div
+                class="card-cover h-32 bg-gradient-to-br from-red-soft to-black flex items-center justify-center relative"
+              >
+                <span
+                  class="absolute top-2 left-2 z-10 bg-red text-white text-[0.62rem] font-bold font-mono px-2 py-0.5 rounded"
+                  >−20%</span
+                >
+                <svg
+                  width="34"
+                  height="34"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="1.6"
+                  class="relative"
+                >
+                  <rect x="2" y="7" width="20" height="10" rx="5" />
+                </svg>
+              </div>
+              <div class="p-3.5">
+                <span class="font-mono text-[0.62rem] text-white/40 uppercase"
+                  >PlayStation</span
+                >
+                <h3 class="font-semibold text-sm mt-1 mb-2 leading-snug">
+                  DualSense Wireless Controller
+                </h3>
+                <div class="flex items-baseline gap-2">
+                  <span
+                    class="font-mono text-white/35 line-through text-[0.68rem]"
+                    >15,999</span
+                  >
+                  <span class="font-mono font-bold text-sm">PKR 12,499</span>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="glow-border shrink-0 w-56 bg-base-800 border border-white/10 rounded-xl overflow-hidden transition"
+            >
+              <div
+                class="card-cover h-32 bg-gradient-to-br from-base-600 to-black flex items-center justify-center relative"
+              >
+                <span
+                  class="absolute top-2 left-2 z-10 bg-white/10 border border-white/20 text-white text-[0.62rem] font-bold font-mono px-2 py-0.5 rounded"
+                  >NEW</span
+                >
+                <svg
+                  width="34"
+                  height="34"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="1.6"
+                  class="relative"
+                >
+                  <rect x="3" y="4" width="18" height="12" rx="2" />
+                  <path d="M8 20h8" />
+                </svg>
+              </div>
+              <div class="p-3.5">
+                <span class="font-mono text-[0.62rem] text-white/40 uppercase"
+                  >Xbox</span
+                >
+                <h3 class="font-semibold text-sm mt-1 mb-2 leading-snug">
+                  Xbox Series S 512GB
+                </h3>
+                <div class="flex items-baseline gap-2">
+                  <span class="font-mono font-bold text-sm">PKR 79,999</span>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="glow-border shrink-0 w-56 bg-base-800 border border-white/10 rounded-xl overflow-hidden transition"
+            >
+              <div
+                class="card-cover h-32 bg-gradient-to-br from-red-soft to-black flex items-center justify-center relative"
+              >
+                <span
+                  class="absolute top-2 left-2 z-10 bg-red text-white text-[0.62rem] font-bold font-mono px-2 py-0.5 rounded"
+                  >−10%</span
+                >
+                <svg
+                  width="34"
+                  height="34"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="1.6"
+                  class="relative"
+                >
+                  <rect x="4" y="3" width="16" height="12" rx="1" />
+                  <path d="M2 19h20l-2-4H4z" />
+                </svg>
+              </div>
+              <div class="p-3.5">
+                <span class="font-mono text-[0.62rem] text-white/40 uppercase"
+                  >PC Gaming</span
+                >
+                <h3 class="font-semibold text-sm mt-1 mb-2 leading-snug">
+                  RTX 4070 Ti Super 16GB
+                </h3>
+                <div class="flex items-baseline gap-2">
+                  <span
+                    class="font-mono text-white/35 line-through text-[0.68rem]"
+                    >209,999</span
+                  >
+                  <span class="font-mono font-bold text-sm">PKR 189,999</span>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="glow-border shrink-0 w-56 bg-base-800 border border-white/10 rounded-xl overflow-hidden transition"
+            >
+              <div
+                class="card-cover h-32 bg-gradient-to-br from-base-600 to-black flex items-center justify-center relative"
+              >
+                <span
+                  class="absolute top-2 left-2 z-10 bg-white/10 border border-white/20 text-white text-[0.62rem] font-bold font-mono px-2 py-0.5 rounded"
+                  >LOW STOCK</span
+                >
+                <svg
+                  width="34"
+                  height="34"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="1.6"
+                  class="relative"
+                >
+                  <rect x="6" y="2" width="12" height="20" rx="4" />
+                </svg>
+              </div>
+              <div class="p-3.5">
+                <span class="font-mono text-[0.62rem] text-white/40 uppercase"
+                  >Nintendo</span
+                >
+                <h3 class="font-semibold text-sm mt-1 mb-2 leading-snug">
+                  Switch OLED White
+                </h3>
+                <div class="flex items-baseline gap-2">
+                  <span class="font-mono font-bold text-sm">PKR 89,500</span>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="glow-border shrink-0 w-56 bg-base-800 border border-white/10 rounded-xl overflow-hidden transition"
+            >
+              <div
+                class="card-cover h-32 bg-gradient-to-br from-red-soft to-black flex items-center justify-center relative"
+              >
+                <span
+                  class="absolute top-2 left-2 z-10 bg-red text-white text-[0.62rem] font-bold font-mono px-2 py-0.5 rounded"
+                  >−25%</span
+                >
+                <svg
+                  width="34"
+                  height="34"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="1.6"
+                  class="relative"
+                >
+                  <path d="M3 18v-2a7 7 0 0114 0v2" />
+                  <rect x="1" y="18" width="6" height="4" rx="1" />
+                  <rect x="17" y="18" width="6" height="4" rx="1" />
+                </svg>
+              </div>
+              <div class="p-3.5">
+                <span class="font-mono text-[0.62rem] text-white/40 uppercase"
+                  >Accessories</span
+                >
+                <h3 class="font-semibold text-sm mt-1 mb-2 leading-snug">
+                  HyperX Cloud II Headset
+                </h3>
+                <div class="flex items-baseline gap-2">
+                  <span
+                    class="font-mono text-white/35 line-through text-[0.68rem]"
+                    >18,000</span
+                  >
+                  <span class="font-mono font-bold text-sm">PKR 13,500</span>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="glow-border shrink-0 w-56 bg-base-800 border border-white/10 rounded-xl overflow-hidden transition"
+            >
+              <div
+                class="card-cover h-32 bg-gradient-to-br from-base-600 to-black flex items-center justify-center relative"
+              >
+                <span
+                  class="absolute top-2 left-2 z-10 bg-white/10 border border-white/20 text-white text-[0.62rem] font-bold font-mono px-2 py-0.5 rounded"
+                  >VERIFIED</span
+                >
+                <svg
+                  width="34"
+                  height="34"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="1.6"
+                  class="relative"
+                >
+                  <path d="M3 12a9 9 0 109-9" />
+                  <path d="M3 4v8h8" />
+                </svg>
+              </div>
+              <div class="p-3.5">
+                <span class="font-mono text-[0.62rem] text-white/40 uppercase"
+                  >Pre-Owned</span
+                >
+                <h3 class="font-semibold text-sm mt-1 mb-2 leading-snug">
+                  PS4 Slim 500GB Bundle
+                </h3>
+                <div class="flex items-baseline gap-2">
+                  <span class="font-mono font-bold text-sm">PKR 34,999</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================================
+     SECTION 3 — ABOUT US
+============================================================== -->
+      <section class="bg-base-900 py-20 border-b border-white/10" id="about">
+        <div
+          class="max-w-[1320px] mx-auto px-6 grid lg:grid-cols-[0.9fr_1.1fr] gap-14 items-center"
+        >
+          <div class="bg-base-800 border border-white/10 rounded-2xl p-8">
+            <span
+              class="font-mono text-xs font-bold tracking-widest uppercase text-red-bright"
+              >Our Story</span
+            >
+            <h3 class="font-display font-bold text-2xl mt-2.5 mb-3">
+              Started in a Lahore basement in 2019.
+            </h3>
+            <p class="text-white/60 text-[0.96rem]">
+              LevelUp Bazaar began as three friends reselling imported consoles
+              on Facebook Marketplace. Today we run a multi-vendor platform
+              where verified shopkeepers, importers, and gamers buy and sell —
+              with every order backed by our authenticity check and local
+              warranty support.
+            </p>
+          </div>
+          <div>
+            <span
+              class="font-mono text-xs font-bold tracking-widest uppercase text-red-bright"
+              >Why Gamers Trust Us</span
+            >
+            <h2
+              class="font-display font-bold text-[clamp(1.8rem,3vw,2.5rem)] mt-2.5 mb-3 uppercase"
+            >
+              One store, every kind of user.
+            </h2>
+            <p class="text-white/60 mb-6 max-w-[480px]">
+              Customers browse and buy, vendors manage their own storefronts,
+              and our admin team verifies every listing — all inside one system
+              built for Pakistan's gaming community.
+            </p>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="bg-base-800 border border-white/10 rounded-xl p-5">
+                <b class="font-display font-bold text-red-bright text-3xl block"
+                  >7 Yrs</b
+                ><span
+                  class="font-mono text-[0.7rem] text-white/40 tracking-wide"
+                  >SERVING PAKISTAN</span
+                >
+              </div>
+              <div class="bg-base-800 border border-white/10 rounded-xl p-5">
+                <b class="font-display font-bold text-red-bright text-3xl block"
+                  >1,200+</b
+                ><span
+                  class="font-mono text-[0.7rem] text-white/40 tracking-wide"
+                  >ACTIVE VENDORS</span
+                >
+              </div>
+              <div class="bg-base-800 border border-white/10 rounded-xl p-5">
+                <b class="font-display font-bold text-red-bright text-3xl block"
+                  >18 Cities</b
+                ><span
+                  class="font-mono text-[0.7rem] text-white/40 tracking-wide"
+                  >DELIVERY NETWORK</span
+                >
+              </div>
+              <div class="bg-base-800 border border-white/10 rounded-xl p-5">
+                <b class="font-display font-bold text-red-bright text-3xl block"
+                  >100%</b
+                ><span
+                  class="font-mono text-[0.7rem] text-white/40 tracking-wide"
+                  >GENUINE CHECK</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================================
+     SECTION 4 — SERVICES
+============================================================== -->
+      <section class="bg-base-850 py-20 border-b border-white/10" id="services">
+        <div class="max-w-[1320px] mx-auto px-6">
+          <div class="max-w-[640px] mb-11">
+            <span
+              class="font-mono text-xs font-bold tracking-widest uppercase text-red-bright"
+              >What We Offer</span
+            >
+            <h2
+              class="font-display font-bold text-[clamp(1.8rem,3vw,2.5rem)] mt-2.5 uppercase"
+            >
+              Services built around your setup.
+            </h2>
+            <p class="text-white/60 mt-3">
+              From same-day delivery to chip-level repairs, our services cover
+              the full life of your gear — not just the checkout.
+            </p>
+          </div>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div
+              class="glow-border border border-white/10 rounded-xl p-6 bg-base-800 transition"
+            >
+              <div
+                class="w-11 h-11 rounded-lg bg-red/15 border border-red/30 flex items-center justify-center mb-4"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#FF453E"
+                  stroke-width="2"
+                >
+                  <path d="M3 12l2-7h14l2 7" />
+                  <rect x="3" y="12" width="18" height="7" rx="2" />
+                </svg>
+              </div>
+              <h3 class="font-display font-semibold text-lg mb-2">
+                Same-Day Delivery
+              </h3>
+              <p class="text-sm text-white/55">
+                Order before 3 PM in Karachi, Lahore or Islamabad and get it
+                delivered the same evening.
+              </p>
+            </div>
+            <div
+              class="glow-border border border-white/10 rounded-xl p-6 bg-base-800 transition"
+            >
+              <div
+                class="w-11 h-11 rounded-lg bg-red/15 border border-red/30 flex items-center justify-center mb-4"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#FF453E"
+                  stroke-width="2"
+                >
+                  <path d="M14 3l7 7-9 9-7-7 9-9z" />
+                  <path d="M9 16l-4 4" />
+                </svg>
+              </div>
+              <h3 class="font-display font-semibold text-lg mb-2">
+                Console &amp; PC Repair
+              </h3>
+              <p class="text-sm text-white/55">
+                In-house chip-level repair for consoles, controllers, and custom
+                PC builds with genuine parts.
+              </p>
+            </div>
+            <div
+              class="glow-border border border-white/10 rounded-xl p-6 bg-base-800 transition"
+            >
+              <div
+                class="w-11 h-11 rounded-lg bg-red/15 border border-red/30 flex items-center justify-center mb-4"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#FF453E"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M3 6h18M6 6v13a2 2 0 002 2h8a2 2 0 002-2V6M10 6V4a2 2 0 012-2 2 2 0 012 2v2"
+                  />
+                </svg>
+              </div>
+              <h3 class="font-display font-semibold text-lg mb-2">
+                Trade-In &amp; Buyback
+              </h3>
+              <p class="text-sm text-white/55">
+                Swap your old console or game for store credit — instant
+                valuation, no haggling.
+              </p>
+            </div>
+            <div
+              class="glow-border border border-white/10 rounded-xl p-6 bg-base-800 transition"
+            >
+              <div
+                class="w-11 h-11 rounded-lg bg-red/15 border border-red/30 flex items-center justify-center mb-4"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#FF453E"
+                  stroke-width="2"
+                >
+                  <rect x="2" y="7" width="20" height="10" rx="2" />
+                  <path d="M6 11h.01M10 11h.01" />
+                </svg>
+              </div>
+              <h3 class="font-display font-semibold text-lg mb-2">
+                Cash on Delivery
+              </h3>
+              <p class="text-sm text-white/55">
+                Pay when it arrives — available nationwide, no advance payment
+                required.
+              </p>
+            </div>
+            <div
+              class="glow-border border border-white/10 rounded-xl p-6 bg-base-800 transition"
+            >
+              <div
+                class="w-11 h-11 rounded-lg bg-red/15 border border-red/30 flex items-center justify-center mb-4"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#FF453E"
+                  stroke-width="2"
+                >
+                  <rect x="4" y="4" width="16" height="16" rx="2" />
+                  <path d="M9 9h6v6H9z" />
+                </svg>
+              </div>
+              <h3 class="font-display font-semibold text-lg mb-2">
+                Custom PC Building
+              </h3>
+              <p class="text-sm text-white/55">
+                Tell us your budget and games — our techs source parts and
+                assemble your rig in-store.
+              </p>
+            </div>
+            <div
+              class="glow-border border border-white/10 rounded-xl p-6 bg-base-800 transition"
+            >
+              <div
+                class="w-11 h-11 rounded-lg bg-red/15 border border-red/30 flex items-center justify-center mb-4"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#FF453E"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"
+                  />
+                </svg>
+              </div>
+              <h3 class="font-display font-semibold text-lg mb-2">
+                Extended Warranty Club
+              </h3>
+              <p class="text-sm text-white/55">
+                Extend manufacturer warranty up to 2 years on consoles, GPUs,
+                and accessories.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================================
+     SECTION 5 — CATEGORIES (store genre tiles)
+============================================================== -->
+      <section
+        class="bg-base-900 py-20 border-b border-white/10"
+        id="categories"
+      >
+        <div class="max-w-[1320px] mx-auto px-6">
+          <div class="max-w-[640px] mb-11">
+            <span
+              class="font-mono text-xs font-bold tracking-widest uppercase text-red-bright"
+              >Browse the Bazaar</span
+            >
+            <h2
+              class="font-display font-bold text-[clamp(1.8rem,3vw,2.5rem)] mt-2.5 uppercase"
+            >
+              Shop by category.
+            </h2>
+            <p class="text-white/60 mt-3">
+              From flagship consoles to spare thumbsticks — filtered, verified,
+              and priced in PKR.
+            </p>
+          </div>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div
+              class="glow-border group bg-base-800 border border-white/10 rounded-xl overflow-hidden transition"
+            >
+              <div
+                class="h-28 bg-gradient-to-br from-red-soft to-black flex items-center justify-center"
+              >
+                <svg
+                  width="30"
+                  height="30"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="1.6"
+                >
+                  <rect x="2" y="7" width="20" height="10" rx="5" />
+                </svg>
+              </div>
+              <div class="p-5">
+                <h3 class="font-display font-semibold text-lg mb-1">
+                  PlayStation
+                </h3>
+                <p class="text-sm text-white/50">
+                  PS5, PS5 Pro, PS4 &amp; exclusive titles.
+                </p>
+                <div
+                  class="flex justify-between items-baseline mt-4 pt-4 border-t border-white/10"
+                >
+                  <span class="text-xs text-white/40">340 listings</span>
+                  <b class="font-mono text-red-bright text-sm"
+                    >from PKR 12,500</b
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="glow-border group bg-base-800 border border-white/10 rounded-xl overflow-hidden transition"
+            >
+              <div
+                class="h-28 bg-gradient-to-br from-base-600 to-black flex items-center justify-center"
+              >
+                <svg
+                  width="30"
+                  height="30"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="1.6"
+                >
+                  <rect x="3" y="4" width="18" height="12" rx="2" />
+                  <path d="M8 20h8" />
+                </svg>
+              </div>
+              <div class="p-5">
+                <h3 class="font-display font-semibold text-lg mb-1">Xbox</h3>
+                <p class="text-sm text-white/50">
+                  Series X/S, Game Pass keys, controllers.
+                </p>
+                <div
+                  class="flex justify-between items-baseline mt-4 pt-4 border-t border-white/10"
+                >
+                  <span class="text-xs text-white/40">210 listings</span>
+                  <b class="font-mono text-red-bright text-sm"
+                    >from PKR 9,900</b
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="glow-border group bg-base-800 border border-white/10 rounded-xl overflow-hidden transition"
+            >
+              <div
+                class="h-28 bg-gradient-to-br from-red-soft to-black flex items-center justify-center"
+              >
+                <svg
+                  width="30"
+                  height="30"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="1.6"
+                >
+                  <rect x="4" y="3" width="16" height="12" rx="1" />
+                  <path d="M2 19h20l-2-4H4z" />
+                </svg>
+              </div>
+              <div class="p-5">
+                <h3 class="font-display font-semibold text-lg mb-1">
+                  PC Gaming
+                </h3>
+                <p class="text-sm text-white/50">
+                  GPUs, prebuilts, monitors &amp; peripherals.
+                </p>
+                <div
+                  class="flex justify-between items-baseline mt-4 pt-4 border-t border-white/10"
+                >
+                  <span class="text-xs text-white/40">560 listings</span>
+                  <b class="font-mono text-red-bright text-sm"
+                    >from PKR 6,000</b
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="glow-border group bg-base-800 border border-white/10 rounded-xl overflow-hidden transition"
+            >
+              <div
+                class="h-28 bg-gradient-to-br from-base-600 to-black flex items-center justify-center"
+              >
+                <svg
+                  width="30"
+                  height="30"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="1.6"
+                >
+                  <rect x="6" y="2" width="12" height="20" rx="4" />
+                </svg>
+              </div>
+              <div class="p-5">
+                <h3 class="font-display font-semibold text-lg mb-1">
+                  Nintendo Switch
+                </h3>
+                <p class="text-sm text-white/50">
+                  OLED, Lite, Joy-Cons &amp; family titles.
+                </p>
+                <div
+                  class="flex justify-between items-baseline mt-4 pt-4 border-t border-white/10"
+                >
+                  <span class="text-xs text-white/40">180 listings</span>
+                  <b class="font-mono text-red-bright text-sm"
+                    >from PKR 8,200</b
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="glow-border group bg-base-800 border border-white/10 rounded-xl overflow-hidden transition"
+            >
+              <div
+                class="h-28 bg-gradient-to-br from-red-soft to-black flex items-center justify-center"
+              >
+                <svg
+                  width="30"
+                  height="30"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="1.6"
+                >
+                  <path d="M3 18v-2a7 7 0 0114 0v2" />
+                  <rect x="1" y="18" width="6" height="4" rx="1" />
+                  <rect x="17" y="18" width="6" height="4" rx="1" />
+                </svg>
+              </div>
+              <div class="p-5">
+                <h3 class="font-display font-semibold text-lg mb-1">
+                  Accessories
+                </h3>
+                <p class="text-sm text-white/50">
+                  Headsets, controllers, cables &amp; skins.
+                </p>
+                <div
+                  class="flex justify-between items-baseline mt-4 pt-4 border-t border-white/10"
+                >
+                  <span class="text-xs text-white/40">720 listings</span>
+                  <b class="font-mono text-red-bright text-sm">from PKR 800</b>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="glow-border group bg-base-800 border border-white/10 rounded-xl overflow-hidden transition"
+            >
+              <div
+                class="h-28 bg-gradient-to-br from-base-600 to-black flex items-center justify-center"
+              >
+                <svg
+                  width="30"
+                  height="30"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="1.6"
+                >
+                  <path d="M3 12a9 9 0 109-9" />
+                  <path d="M3 4v8h8" />
+                </svg>
+              </div>
+              <div class="p-5">
+                <h3 class="font-display font-semibold text-lg mb-1">
+                  Pre-Owned Deals
+                </h3>
+                <p class="text-sm text-white/50">
+                  Inspected, tested &amp; sold with warranty.
+                </p>
+                <div
+                  class="flex justify-between items-baseline mt-4 pt-4 border-t border-white/10"
+                >
+                  <span class="text-xs text-white/40">295 listings</span>
+                  <b class="font-mono text-red-bright text-sm"
+                    >from PKR 3,500</b
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================================
+     SECTION 6 — CONTACT US
+============================================================== -->
+      <section class="bg-base-850 py-20" id="contact">
+        <div
+          class="max-w-[1320px] mx-auto px-6 grid lg:grid-cols-2 gap-14 items-start"
+        >
+          <div>
+            <span
+              class="font-mono text-xs font-bold tracking-widest uppercase text-red-bright"
+              >Get In Touch</span
+            >
+            <h2
+              class="font-display font-bold text-[clamp(1.8rem,3vw,2.5rem)] mt-2.5 uppercase"
+            >
+              Questions? Reach the bazaar.
+            </h2>
+            <p class="text-white/60 mt-2.5 mb-6 max-w-[420px]">
+              Whether you're buying, selling, or need repair support — our team
+              replies within a working day.
+            </p>
+            <form
+              class="bg-base-800 border border-white/10 rounded-2xl p-8"
+              onsubmit="return false;"
+            >
+              <div class="grid sm:grid-cols-2 gap-3.5 mb-3.5">
+                <div class="flex flex-col gap-1.5">
+                  <label
+                    for="name"
+                    class="font-mono text-xs font-bold text-white/60"
+                    >Full Name</label
+                  >
+                  <input
+                    id="name"
+                    type="text"
+                    placeholder="Ahmed Khan"
+                    class="bg-base-700 border border-white/10 rounded-lg px-3.5 py-2.5 text-sm placeholder-white/30 focus:outline-none focus:border-red"
+                  />
+                </div>
+                <div class="flex flex-col gap-1.5">
+                  <label
+                    for="phone"
+                    class="font-mono text-xs font-bold text-white/60"
+                    >Phone Number</label
+                  >
+                  <input
+                    id="phone"
+                    type="tel"
+                    placeholder="03XX-XXXXXXX"
+                    class="bg-base-700 border border-white/10 rounded-lg px-3.5 py-2.5 text-sm placeholder-white/30 focus:outline-none focus:border-red"
+                  />
+                </div>
+              </div>
+              <div class="grid sm:grid-cols-2 gap-3.5 mb-3.5">
+                <div class="flex flex-col gap-1.5">
+                  <label
+                    for="city"
+                    class="font-mono text-xs font-bold text-white/60"
+                    >City</label
+                  >
+                  <select
+                    id="city"
+                    class="bg-base-700 border border-white/10 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-red"
+                  >
+                    <option>Karachi</option>
+                    <option>Lahore</option>
+                    <option>Islamabad</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="flex flex-col gap-1.5">
+                  <label
+                    for="topic"
+                    class="font-mono text-xs font-bold text-white/60"
+                    >Topic</label
+                  >
+                  <select
+                    id="topic"
+                    class="bg-base-700 border border-white/10 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-red"
+                  >
+                    <option>Order Support</option>
+                    <option>Become a Vendor</option>
+                    <option>Repair Service</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+              </div>
+              <div class="flex flex-col gap-1.5 mb-3.5">
+                <label
+                  for="message"
+                  class="font-mono text-xs font-bold text-white/60"
+                  >Message</label
+                >
+                <textarea
+                  id="message"
+                  placeholder="Tell us how we can help…"
+                  rows="4"
+                  class="bg-base-700 border border-white/10 rounded-lg px-3.5 py-2.5 text-sm placeholder-white/30 focus:outline-none focus:border-red resize-y"
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-bold text-sm bg-red hover:bg-red-bright transition"
+              >
+                Send Message
+              </button>
+            </form>
+          </div>
+
+          <div class="flex flex-col gap-4.5">
+            <div class="bg-base-800 border border-white/10 rounded-2xl p-6">
+              <h3
+                class="text-red-bright font-display font-semibold text-base mb-3.5"
+              >
+                Store Locations
+              </h3>
+              <ul>
+                <li
+                  class="flex justify-between gap-2.5 py-2.5 border-b border-white/10 text-sm"
+                >
+                  <span class="text-white/45">Karachi</span
+                  ><span class="font-mono font-semibold"
+                    >Tariq Road, Bahadurabad</span
+                  >
+                </li>
+                <li
+                  class="flex justify-between gap-2.5 py-2.5 border-b border-white/10 text-sm"
+                >
+                  <span class="text-white/45">Lahore</span
+                  ><span class="font-mono font-semibold"
+                    >Hafeez Center, Gulberg</span
+                  >
+                </li>
+                <li class="flex justify-between gap-2.5 py-2.5 text-sm">
+                  <span class="text-white/45">Islamabad</span
+                  ><span class="font-mono font-semibold">Blue Area, F-7</span>
+                </li>
+              </ul>
+            </div>
+            <div class="bg-base-800 border border-white/10 rounded-2xl p-6">
+              <h3
+                class="text-red-bright font-display font-semibold text-base mb-3.5"
+              >
+                Store Hours
+              </h3>
+              <ul>
+                <li
+                  class="flex justify-between gap-2.5 py-2.5 border-b border-white/10 text-sm"
+                >
+                  <span class="text-white/45">Mon – Sat</span
+                  ><span class="font-mono font-semibold"
+                    >11:00 AM – 10:00 PM</span
+                  >
+                </li>
+                <li class="flex justify-between gap-2.5 py-2.5 text-sm">
+                  <span class="text-white/45">Sunday</span
+                  ><span class="font-mono font-semibold"
+                    >2:00 PM – 10:00 PM</span
+                  >
+                </li>
+              </ul>
+            </div>
+            <div
+              class="bg-base-800 border border-white/10 rounded-2xl px-6 py-5 flex items-center gap-4"
+            >
+              <div
+                class="w-10 h-10 rounded-full bg-red/15 border border-red/30 flex items-center justify-center shrink-0"
+              >
+                <svg
+                  width="19"
+                  height="19"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#FF453E"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M21 11.5a8.5 8.5 0 01-12.5 7.4L3 20l1.2-5.3A8.5 8.5 0 1121 11.5z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <b class="font-display font-semibold block text-lg"
+                  >Chat on WhatsApp</b
+                >
+                <span class="text-sm text-white/50"
+                  >0311-1234567 · fastest response</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer
+      class="bg-base-900 border-t border-white/10 text-white/40 py-7 text-sm"
+    >
+      <div
+        class="max-w-[1320px] mx-auto px-6 flex justify-between flex-wrap gap-3"
+      >
+        <span>© 2026 LevelUp Bazaar. All rights reserved.</span>
+        <span>
+          <a href="#top" class="hover:text-red-bright">Terms</a> ·
+          <a href="#top" class="hover:text-red-bright">Privacy</a> ·
+          <a href="#top" class="hover:text-red-bright">Become a Vendor</a>
+        </span>
+      </div>
+    </footer>
+
+    <script>
+      document.querySelectorAll(".role-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".role-btn").forEach((b) => {
+            b.classList.remove("bg-red", "text-white");
+            b.classList.add("text-white/50");
+          });
+          btn.classList.remove("text-white/50");
+          btn.classList.add("bg-red", "text-white");
+        });
+      });
+    </script>
+  </body>
+</html>
